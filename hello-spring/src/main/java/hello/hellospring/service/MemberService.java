@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 // 스프링 컨테이너에 멤버 서비스를 등록하기 위해.
-@Service
+// @Service
 public class MemberService {
 
     //
     private final MemberRepository memberRepository;
 
+
     // 멤버 서비스를 생성할 때, Autowired를 통해 스프링 컨테이너에 있는 member repository를 가져다 넣어줌.
-    @Autowired
+    // @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
