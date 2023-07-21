@@ -1,4 +1,5 @@
 package hello.hellospring;
+import hello.hellospring.aop.TimeTraceAop;
 import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,6 @@ public class SpringConfig {
     public SpringConfig(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-    */
-
-    // 스프링 빈을 등록한다. 스프링이 켜질 때, Configuration를 읽고 컨테이너에 등록시켜 준다.
-    @Bean
-    public MemberService memberService() {
-        return new MemberService(memberRepository());
-    }
 
     private EntityManager em;
 
@@ -32,12 +26,26 @@ public class SpringConfig {
     public SpringConfig(EntityManager em) {
         this.em = em;
     }
+    */
 
-    @Bean
-    public MemberRepository memberRepository() {
-        // return new MemoryMemberRepository();
-        // return new JdbcMemberRepository(dataSource);
-        // return new JdbcTemplateMemberRepository(dataSource);
-        return new JpaMemberRepository(em);
+    private final MemberRepository memberRepository;
+
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
+
+    // 스프링 빈을 등록한다. 스프링이 켜질 때, Configuration를 읽고 컨테이너에 등록시켜 준다.
+    @Bean
+    public MemberService memberService() {
+        return new MemberService(memberRepository);
+    }
+
+
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        // return new MemoryMemberRepository();
+//        // return new JdbcMemberRepository(dataSource);
+//        // return new JdbcTemplateMemberRepository(dataSource);
+//        return new JpaMemberRepository(em);
+//    }
 }

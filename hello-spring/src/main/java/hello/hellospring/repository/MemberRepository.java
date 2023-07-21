@@ -10,7 +10,7 @@ public interface MemberRepository {
 
     Member save(Member member);
     // Optional : NULL일 경우를 대비해, Optional 사용
-    Optional<Member> findById(Long Id);
+    Optional<Member> findById(Long id);
     Optional<Member> findByName(String name);
     List<Member> findAll();
 
