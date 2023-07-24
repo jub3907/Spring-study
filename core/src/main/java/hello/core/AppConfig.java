@@ -20,7 +20,7 @@ public class AppConfig {
 
     // Discount Policy는 Fix를 사용한다.
     public DiscountPolicy discountPolicy(){
-        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 
     // 멤버 서비스에선, MemberServiceImpl을 사용하겠다.
