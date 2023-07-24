@@ -7,11 +7,16 @@ import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+
     // 구현체에 의존하지 않고, 추상화에만 의존하도록 변경.
-    private DiscountPolicy discountPolicy;
+    // 철저하게 DIP를 지키고 있음.
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
 
-
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     // 주문 생성 요청이 존다면
     @Override
