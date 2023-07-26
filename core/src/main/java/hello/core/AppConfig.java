@@ -21,6 +21,7 @@ public class AppConfig {
     // Repository는 Memory로 할 것이다.
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
@@ -33,12 +34,14 @@ public class AppConfig {
     // 멤버 서비스에선, MemberServiceImpl을 사용하겠다.
     @Bean
     public MemberService memberService() {
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     // 오더 서비스에선 OrderServiceImpl을 사용하겠다.
     @Bean
     public OrderService orderService() {
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 }
