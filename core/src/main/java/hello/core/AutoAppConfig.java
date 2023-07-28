@@ -10,12 +10,12 @@ import org.springframework.context.annotation.FilterType;
 @Configuration
 // Configuration이 붙은 빈은 등록하지 않기 위해. 예제 보호?
 @ComponentScan(
-        basePackages = "hello.core.member",
+        basePackages = "hello.core",
         excludeFilters = @ComponentScan.Filter(type= FilterType.ANNOTATION, classes = Configuration.class)
 )
 public class AutoAppConfig {
-    @Bean(name = "memoryMemberRepository")
-    MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
-    }
+//    @Bean(name = "memoryMemberRepository")
+//    MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
 }
