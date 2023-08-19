@@ -10,7 +10,7 @@ import java.util.*;
 public class MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();
-    private static long sequence = 1L;
+    private static long sequence = 0L;
 
     public Member save(Member member) {
 
