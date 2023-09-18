@@ -14,7 +14,6 @@ public class JpaMain {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
         EntityManager em = emf.createEntityManager();
-
         EntityTransaction tx = em.getTransaction();
 
 
@@ -27,14 +26,14 @@ public class JpaMain {
 
 //            Member findMember = em.find(Member.class, 1L);
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(10)
-                    .getResultList();
-
-            for (Member m : result) {
-                System.out.println("member.name = " + m.getName());
-            }
+//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(5)
+//                    .setMaxResults(10)
+//                    .getResultList();
+//
+//            for (Member m : result) {
+//                System.out.println("member.name = " + m.getName());
+//            }
 
             tx.commit();
         } catch (Exception e) {
