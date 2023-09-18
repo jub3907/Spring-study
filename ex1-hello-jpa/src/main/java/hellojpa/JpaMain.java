@@ -19,21 +19,19 @@ public class JpaMain {
 
         tx.begin();
         try {
-//            Member member = new Member();
-//            member.setId(1L);
-//            member.setName("kim");
-//            em.persist(member);
 
-//            Member findMember = em.find(Member.class, 1L);
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-//                    .setFirstResult(5)
-//                    .setMaxResults(10)
-//                    .getResultList();
-//
-//            for (Member m : result) {
-//                System.out.println("member.name = " + m.getName());
-//            }
+            Member member = new Member();
+            member.setName("member1");
+
+            //역방향(주인이 아닌 방향)만 연관관계 설정
+            team.getMembers().add(member);
+            member.setTeam(team);
+
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {
