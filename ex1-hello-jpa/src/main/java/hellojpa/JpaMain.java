@@ -1,5 +1,8 @@
 package hellojpa;
 
+import hellojpa.parent.Child;
+import hellojpa.parent.Parent;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -19,19 +22,21 @@ public class JpaMain {
 
         tx.begin();
         try {
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+            child1.setName("child1");
+            child2.setName("child2");
 
-            Member member = new Member();
-            member.setName("member1");
+            Parent parent = new Parent();
+            parent.setName("parent");
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            //역방향(주인이 아닌 방향)만 연관관계 설정
-            team.getMembers().add(member);
-            member.setTeam(team);
+            em.persist(parent);
 
-            em.persist(member);
+            Parent parent1 = em.find(Parent.class, parent.getId());
+            parent1.getChildList().remove(0);
 
             tx.commit();
         } catch (Exception e) {
