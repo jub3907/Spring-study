@@ -1,10 +1,11 @@
 package jpql;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import jpql.domain.Member;
+import jpql.domain.Team;
+
+import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.util.List;
 
 public class Main {
 
@@ -18,23 +19,23 @@ public class Main {
 
         tx.begin();
         try {
-
 //            Member member = new Member();
 //            member.setUsername("member1");
-//            member.setHomeAddress(new Address("city1", "street", "zipcode"));
+//            member.setAge(20);
+
+//            Team team = new Team();
+//            team.setName("team");
 //
-//            member.getFavoriteFoods().add("치킨");
-//            member.getFavoriteFoods().add("피자");
-//            member.getFavoriteFoods().add("족발");
-//
-//            member.getAddressHistory().add(new AddressEntity("old1", "street", "zipcode"));
-//            member.getAddressHistory().add(new AddressEntity("old2", "street", "zipcode"));
-//
+//            em.persist(team);
+//            member.setTeam(team);
+
 //            em.persist(member);
-//
+
 //            em.flush();
 //            em.clear();
 
+            Team team1 = em.createQuery("select t from Member m join m.team t", Team.class)
+                    .getSingleResult();
 
 
             tx.commit();
