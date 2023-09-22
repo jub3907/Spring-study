@@ -16,6 +16,10 @@ public class AddressEntity {
     @Embedded
     private Address address;
 
+    public AddressEntity(String city, String street, String zipcode) {
+        this.address = new Address(city, street, zipcode);
+    }
+
     public String getId() {
         return id;
     }
