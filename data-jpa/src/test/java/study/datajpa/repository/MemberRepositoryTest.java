@@ -4,10 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
@@ -340,6 +337,57 @@ class MemberRepositoryTest {
 
         //then
         System.out.println("findMember.createdDate = " + findMember.getCreatedAt());
-        System.out.println("findMember.updatedDate = " + findMember.getUpdatedAt());
+        System.out.println("findMember.updatedDate = " + findMember.getLastModifiedAt());
+    }
+
+    @Test
+    public void queryByExample() {
+        Team team = new Team("teamA");
+        teamRepository.save(team);
+
+        Member member1 = new Member("member1", 10, team);
+        memberRepository.save(member1);
+
+        Member member2 = new Member("member2", 20, team);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+         // when
+        // Probe
+        Member member = new Member("member1");
+        member.setTeam(new Team("teamA"));
+        // Exclude 설정
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("age");
+
+        Example<Member> example = Example.of(member, matcher);
+
+        // Example을 사용해서 탐색
+        List<Member> members = memberRepository.findAll(example);
+
+        assertThat(members.get(0).getUsername()).isEqualTo("member1");
+    }
+
+    @Test
+    public void projections() {
+        Team team = new Team("teamA");
+        teamRepository.save(team);
+
+        Member member1 = new Member("member1", 10, team);
+        memberRepository.save(member1);
+
+        Member member2 = new Member("member2", 20, team);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        // when
+        List<UsernameOnlyDto> result = memberRepository.findProjectionsByUsername("member1");
+        for (UsernameOnlyDto usernameOnly : result) {
+            System.out.println("usernameOnly = " + usernameOnly);
+        }
     }
 }
